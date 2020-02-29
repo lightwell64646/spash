@@ -9,13 +9,12 @@ public class movement : myOrbit
     public float wallSpeed = 10;
     public float thrusterStrength = 10;
     public float jumpSpeed = 10;
-    public float maxSpaceSpeed = 6;
+    public float maxSpaceSpeed = 10;
     public float dragForce = 2;
     public float groundAccelRate = 0.1f;
-    public float wallAccelRate = 0.02f;
-    public float groundturnRate = 0.4f;
-    public float SpaceturnRate = 0.2f;
-    public float jumpGroundLength = 30;
+    public float wallAccelRate = 0.1f;
+    public float groundturnRate = 10f;
+    public float SpaceturnRate = 10f;
 
     public unitInterface unit;
 
@@ -23,6 +22,11 @@ public class movement : myOrbit
 
     private float epsilon = 0.001f;
     private Vector2 moveDir;
+    private uint dissableMoveCommands = 0;
+
+    public Vector2 getMoveDir(){
+        return moveDir;
+    }
 
     public void Start()
     {
@@ -38,9 +42,16 @@ public class movement : myOrbit
         return pos2d - closest;
     }
 
+    public void disableMove(uint frames){
+        dissableMoveCommands = frames;
+        moveDir.x = 0;
+        moveDir.y = 0;
+    }
+
     public void move(Vector2 direction)
     {
-        moveDir = direction.normalized;
+        if (dissableMoveCommands == 0)
+            moveDir = direction.normalized;
     }
 
     public void latch()
@@ -58,6 +69,8 @@ public class movement : myOrbit
 
     override public void FixedUpdate()
     {
+        if (dissableMoveCommands > 0)
+            dissableMoveCommands -= 1;
         //update position
         if (onWall != 0 && latched)
         {

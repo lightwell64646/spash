@@ -5,7 +5,6 @@ using UnityEngine;
 public class resources : MonoBehaviour
 {
     public resourceBar health, shields, mana;
-    public SigilArray sigils;
     public unitInterface unit;
 
     public int outOfCombatTime = 300;

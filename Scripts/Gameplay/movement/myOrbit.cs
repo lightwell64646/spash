@@ -21,12 +21,6 @@ public class myOrbit : MonoBehaviour
 			Debug.Log ("expected to have Rigidbody on object " + gameObject.name + " with Orbit Script.");
 		}
 	}
-	
-    public groundNav getNavMesh()
-    {
-        if (onGround == 0) return null;
-        return groundCollider.GetComponent<groundNav>();
-    }
 
     public Vector3 getGravity(Vector3 pos)
     {

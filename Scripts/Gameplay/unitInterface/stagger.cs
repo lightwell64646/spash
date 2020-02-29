@@ -10,17 +10,7 @@ public class stagger : expire, hitModifier
     // Update is called once per frame
     void FixedUpdate()
     {
-        base.FixedUpdate();
-        unit.resourceHandler.shields.regen((float)unit.resourceHandler.shields.maxVal / staggerDurration);
-        Color spriteColor = unit.sprite.color;
-        if (duration != 0) spriteColor.a = 0.5f;
-        else spriteColor.a = 1f;
-        unit.sprite.color = spriteColor;
-    }
-
-    public void setUnit(unitInterface unitI)
-    {
-        unit = unitI;
+        
     }
 
     public int applyHit(Vector2 hitDirection)
@@ -31,5 +21,10 @@ public class stagger : expire, hitModifier
     protected void onExpire()
     {
         unit.hitMods.Remove(this);
+    }
+
+    public void setUnit(unitInterface unitI)
+    {
+        unit = unitI;
     }
 }

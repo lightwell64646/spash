@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class action : MonoBehaviour {
-    public int startup = 5;
-    public int active = 0;
-    public int recovery = 5;
-    public int coolDown = 0;
+    public uint startup = 5;
+    public uint active = 0;
+    public uint recovery = 5;
+    public uint coolDown = 0;
     public int manaCost = 0;
     public int interuptPriority = 1;
 
-    public int cd = 0;
-    public int stage = 0;
-    protected int sustained;
+    public uint cd = 0;
+    public uint stage = 0;
+    protected uint sustained;
     protected unitInterface unit;
 
     public void begin(unitInterface unitI)
@@ -49,6 +49,7 @@ public class action : MonoBehaviour {
             if (stage > recovery+active) startupAct();
             else if (stage == recovery + active) initialAct();
             else if (stage > recovery) act();
+            else if (stage == recovery) tearDownAct();
             else recoveryAct();
             if (stage == 1)
             {
@@ -62,8 +63,9 @@ public class action : MonoBehaviour {
 
     public void interrupt() {stage = 0;}
 
-    public virtual void act() { }
-    public virtual void initialAct() { }
     public virtual void startupAct() { }
+    public virtual void initialAct() { }
+    public virtual void act() { }
+    public virtual void tearDownAct() { }
     public virtual void recoveryAct() { }
 }

@@ -13,9 +13,7 @@ public class unitInterface : MonoBehaviour
     public action currentAction = null;
     public myTags tags;
 
-    public int spellFeedingPower = 1;
-    
-    public float knockbackSusceptibility
+    public float knockbackSusceptibility = 1;
 
     public SpriteRenderer sprite;
 
@@ -41,20 +39,13 @@ public class unitInterface : MonoBehaviour
         return res;
     }
 
-    public void applyKnockBack(Vector2 hitForce)
+    public void applyKnockBack(Vector2 hitdirection, float hitForce, uint hitStun)
     {
-
-    }
-
-    public int feedSpell(int team)
-    {
-        int amount;
-        if (resourceHandler.mana.use(spellFeedingPower))
-        {
-            if (team == tags.team)
-                return spellFeedingPower;
-            return -spellFeedingPower;
-        }
-        return 0;
+        movementScript.rigidbodyCast.velocity = (hitdirection + movementScript.getMoveDir()).normalized * hitForce * knockbackSusceptibility;
+        movementScript.disableMove(hitStun);
+        action stun = new action();
+        stun.startup = hitStun;
+        stun.interuptPriority = 7; //arbitrary large number
+        use(stun);
     }
 }

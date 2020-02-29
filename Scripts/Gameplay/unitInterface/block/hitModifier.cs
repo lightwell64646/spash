@@ -5,5 +5,5 @@ using UnityEngine;
 public interface hitModifier
 {
     int applyHit(Vector2 hitDirection);
-    void setUnit(unitInterface unitI);
+    void setUnit(unitInterface unit);
 }
